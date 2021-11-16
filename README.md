@@ -1,6 +1,7 @@
 # TruSt
 A Coq library with formalization of the Truly Stateless Concurrency Model Checker (TruSt) in Coq. 
-Checkout the [paper](https://people.mpi-sws.org/~viktor/papers/popl2022-trust.pdf) about TruSt.
+
+Checkout the [paper](https://people.mpi-sws.org/~viktor/papers/popl2022-trust.pdf) about TruSt and my [blogpost](https://habr.com/ru/company/JetBrains-education/blog/589343/) (in Russian).
 
 ## Description of Files
 
