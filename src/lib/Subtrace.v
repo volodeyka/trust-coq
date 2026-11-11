@@ -23,7 +23,7 @@ Proof.
   splits; try done. 
   f_equal. extensionality x. 
   destruct (PeanoNat.Nat.ltb x pos) eqn:X.
-  2: { apply NPeano.Nat.ltb_ge in X. f_equal. lia. }
+  2: { apply PeanoNat.Nat.ltb_ge in X. f_equal. lia. }
   apply PeanoNat.Nat.ltb_lt in X.
   rewrite nth_mk_list. destruct (Compare_dec.le_lt_dec pos x); by_subst.
 Qed.

@@ -79,7 +79,7 @@ Proof.
     rewrite <- LEN. do 2 (destruct poss; [vauto| ]).
     assert (In n (n :: n0 :: poss)) as IN1 by done. assert (In n0 (n :: n0 :: poss)) as IN2 by vauto.
     rewrite Heqposs in IN1, IN2. apply in_filterP_iff in IN1. apply in_filterP_iff in IN2. desc.
-    pose proof (NPeano.Nat.lt_trichotomy n n0). des. 
+    pose proof (Nat.lt_trichotomy n n0). des.
     2: { subst n0.
          assert (NoDup (n :: n :: poss)).
          { rewrite Heqposs. apply nodup_filterP, seq_NoDup. }
@@ -104,7 +104,7 @@ Proof.
   assert (NOmega.lt_nat_l i (set_size (acts G \₁ is_init))) as LTi.
   { liaW (set_size (acts G \₁ is_init)). }
 
-  pose proof (NPeano.Nat.lt_trichotomy (index (nu i)) (index (nu j))). des; auto.
+  pose proof (Nat.lt_trichotomy (index (nu i)) (index (nu j))). des; auto.
   { exfalso. specialize INJ with (i := i) (j := j). specialize_full INJ; auto; [| lia].
     eapply wf_index; eauto.
     apply INSET in LTj. apply INSET in LTi. red in LTj, LTi. desc. 

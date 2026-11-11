@@ -1281,7 +1281,7 @@ Proof.
   apply Prev_path in PRf; desf.
   set (P := (fun x => acts x e)).
   assert (PT := PRf).
-  apply path_cont with (P0 := P) in PRf; try basic_solver.
+  apply path_cont with (P := P) in PRf; try basic_solver.
   { desf.
     apply RV_RV in PR; apply PR.
     unfold Prev_rel in P12; desf.
@@ -1335,7 +1335,7 @@ Proof.
   set (P := fun '(G,RW) => acts G e /\ In e RW).
   assert (Pf := proj1 Prev_RW_path PRf); desf.
   assert (PATH := Pf).
-  apply path_cont with (P0 := P) in Pf; desf; eauto; [|firstorder|].
+  apply path_cont with (P := P) in Pf; desf; eauto; [|firstorder|].
   { destruct x1 as [G0 RW2].
     destruct x2 as [G2 RW1]; ins.
     clarify_not.

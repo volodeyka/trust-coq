@@ -829,7 +829,7 @@ Proof using.
   { rewrite SUBco, wf_col0; clear; basic_solver. }
   { by rewrite SUBco, <- restr_relE; apply transitive_restr. }
   { revert wf_co_total0; rewrite SUBco; unfolder.
-    ins; desf; eapply H in NEQ; eauto; desf; eauto. }
+    ins; desf. eapply wf_co_total0 in NEQ; eauto; desf; eauto. }
   { rewrite SUBco; basic_solver. }
   { rewrite SUBco, !seqA, seq_eqvC;
       seq_rewrite wf_co_init0; basic_solver. }

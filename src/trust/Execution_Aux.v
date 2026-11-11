@@ -1018,7 +1018,7 @@ Lemma MaximalWrite_ex G e s
   exists w, MaximalWrite G e w.
 Proof.
   edestruct (last_exists (InitEvent (loc e) :: s)) with 
-  (s0 := co G)
+  (s := co G)
   (a := InitEvent (loc e)) as [w C1]; desf.
   { by apply co_acyclic. }
   { intros ? C.
@@ -1177,7 +1177,7 @@ Proof.
     basic_solver. }
   { split; [basic_solver|].
     unfolder; intros ?? RF; splits; eauto; intro; desf.
-    { eapply HB with (x0 := y); exists x, x; split; vauto. }
+    { cdes HB; eapply N_HB; exists x, x; split; vauto. }
     apply (wf_rfD WF) in RF; unfolder in RF; desf.
     by apply n_is_w in RF1. }
   unfold into_rel;  split; ins; desf.

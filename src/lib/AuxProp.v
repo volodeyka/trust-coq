@@ -161,7 +161,7 @@ Lemma set_finite_nat_precise_bounded s n
     ⟪ INS : s bound ⟫ /\
     ⟪ BND : forall m (SM : s m), m <= bound ⟫.
 Proof using.
-  eapply set_finite_r_min_precise_bounded with (r:=gt) (n0:=n) in SF; auto.
+  eapply set_finite_r_min_precise_bounded with (r:=gt) (n:=n) in SF; auto.
   3: { red. apply gt_irrefl. }
   2: { red. apply gt_trans. }
   desf. exists bound. splits; auto.
@@ -251,7 +251,7 @@ Proof using.
   desc; ins.
   exists (y :: l). splits; auto.
   desf. clear.
-  rewrite nnil_last_default_irrelevance with (y0:=x); ins.
+  rewrite nnil_last_default_irrelevance with (y:=x); ins.
 Qed.
 
 Definition pair_list_elem_related {A} (R : relation A) (p : A * list A) :=

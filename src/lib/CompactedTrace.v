@@ -344,7 +344,7 @@ Section Properties.
     induction n; ins.
     { exists 0. splits; auto.
       unfold cti2ri, cti2ri_helper. lia. }
-    destruct (NPeano.Nat.lt_ge_cases i (cti2ri ct (S n))).
+    destruct (Nat.lt_ge_cases i (cti2ri ct (S n))).
     2: { by exists (S n). }
     destruct IHn with (i:=i); eauto. 
     eapply LDMPRCLOS. exists (S n). basic_solver.
@@ -546,7 +546,7 @@ Section CT2T.
     rewrite plus_0_l.
     rewrite seq_split_gen with (a := cti2ri ct x).
     2: split; lia.
-    rewrite NPeano.Nat.sub_add; [|lia].
+    rewrite Nat.sub_add; [|lia].
     rewrite Nat.sub_diag, seq0, app_nil_l.
     rewrite filterP_cons, length_app.
     assert (compacted_trace_dom (1 + (cti2ri ct x))) as BB.

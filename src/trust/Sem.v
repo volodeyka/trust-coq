@@ -416,7 +416,7 @@ Proof using thread_sem.
       { apply sub_exec_SetRF; eauto; intros ???.
         eapply SBM; basic_solver. }
       intros e' [SB|RF]; ins.
-      { apply sb_SetRF  in SB; unfold sb in SB; ins; unfolder in SB; desf.
+      { unfold sb in SB; ins; unfolder in SB; desf.
         by apply ext_sb_irr in SB0. }
       by unfolder in RF; desf; apply Wf_G. }
     apply sb_max_in_tid in SBM.
@@ -456,7 +456,7 @@ Proof using thread_sem.
   { apply sub_exec_SetCO; eauto.
     intros ???; eapply SBM; basic_solver. }
   intros ? [SB|RF]; ins.
-  { apply sb_SetCO in SB; unfold sb in SB; ins; unfolder in SB; desf.
+  { unfold sb in SB; ins; unfolder in SB; desf.
     by apply ext_sb_irr in SB0.  }
   apply Wf_G in RF; unfolder in RF; desf.
 Qed.
