@@ -951,7 +951,7 @@ Proof using.
   { unfolder; ins; splits; ins; desf; splits; eauto.
     right; exists y; split; eauto; lia. }
   { rewrite (wf_rfE WF), ?seqA, ?id_inter; rels.
-    unfolder; split; ins; desf; splits; ins; eauto using lt_trans.
+    unfolder; split; ins; desf; splits; ins; eauto using Nat.lt_trans.
     all: try by exfalso; apply (wf_rfD WF) in H0; unfolder in H0; desf;
        unfold is_r, is_init in *; desf.
     classical_right.
@@ -962,7 +962,7 @@ Proof using.
     all: eauto using lt_lt_size.
     right; congruence. }
   { rewrite (wf_coE WF), ?seqA.
-    unfolder; split; ins; desf; splits; ins; eauto using lt_trans. }
+    unfolder; split; ins; desf; splits; ins; eauto using Nat.lt_trans. }
   { rewrite wf_sbE, ?seqA; unfolder; ins; desf; splits; ins; eauto.
     all: try solve [unfolder in H; desc; clarify].
       by unfold sb, ext_sb in H0; unfolder in H0; desf.

@@ -787,8 +787,11 @@ Proof using PR Gf_p_sem Gf_full Gf_cons Gf_Wf.
   { unfold full in Gf_full; rewrite Gf_full; basic_solver. }
   destruct rv as [a|].
   { intros e1 e2 [ME AV].
-    destruct (next_G PR2) as [_ []]; [| |eapply LR_trans; eauto]; desf.
-    all: eapply me_LR_e_RV; basic_solver. }
+    destruct (next_G PR2) as [_ NEXT].
+    destruct (NEXT e2 AV) as [EQ|LT].
+    { subst e2. eapply me_LR_e_RV; basic_solver. }
+    eapply LR_trans; [|exact LT].
+    eapply me_LR_e_RV; basic_solver. }
   assert (meLRe := PR2).
   eapply me_LR_e_NR in meLRe; vauto.
   erewrite avail_G_NR; eauto.
@@ -1496,7 +1499,7 @@ Proof.
   apply Prev_RW_rel_Prev_RW in PR.
   assert (NoDup RW) by by apply NoDup_RW in PR.
   apply RW_in_Gf in PR; ins; desf.
-  apply Plus.plus_lt_compat; try lia.
+  apply PeanoNat.Nat.add_lt_mono; try lia.
   enough (length RW < K).
   { apply PeanoNat.Nat.mul_lt_mono; lia. }
   assert (FIN := p_sem_finite Gf_p_sem); desf.

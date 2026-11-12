@@ -84,7 +84,7 @@ Proof.
   do 2 (destruct (constructive_indefinite_description _ _)). desc.
   rewrite e0. rewrite trace_nth_app, e1.
   destruct (excluded_middle_informative _); [by_subst| ].
-  simpl. rewrite Minus.minus_plus. rewrite trace_nth_app, e2.
+  simpl. replace (start + i - start) with i by lia. rewrite trace_nth_app, e2.
   destruct (excluded_middle_informative _); by_subst.
 Qed. 
   

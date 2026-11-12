@@ -352,9 +352,9 @@ Proof using thread_sem.
       intros e1 e2 F; unfolder in F; desf.
       cdes GG'; apply sub_execution_sb in GG'.
       apply NInG; specialize (SUBev _ F1).
-      destruct GG' as [? [? SB]].
-      { unfold sb; unfolder; splits; [|eauto| |]; auto. }
-      unfolder in SB; desf. }
+      assert (SB : sb G e1 e2).
+      { apply GG'. unfold sb; basic_solver. }
+      unfold sb in SB; unfolder in SB; desf. }
     { by rewrite GG'. }
     cdes Sem.
     assert (WF := Wf_G).

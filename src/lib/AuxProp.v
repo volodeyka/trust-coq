@@ -162,8 +162,8 @@ Lemma set_finite_nat_precise_bounded s n
     ⟪ BND : forall m (SM : s m), m <= bound ⟫.
 Proof using.
   eapply set_finite_r_min_precise_bounded with (r:=gt) (n:=n) in SF; auto.
-  3: { red. apply gt_irrefl. }
-  2: { red. apply gt_trans. }
+  3: { unfold irreflexive, gt; lia. }
+  2: { unfold transitive, gt; lia. }
   desf. exists bound. splits; auto.
   ins. apply BND in SM.
   destruct (le_lt_dec m bound); auto.

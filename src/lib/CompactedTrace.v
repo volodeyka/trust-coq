@@ -333,7 +333,7 @@ Section Properties.
         ⟪ BEFLST : i = cti2ri ct (1 + n) ⟫).
   Proof.
     red in CTD. desf.
-    apply le_lt_or_eq in BEFLST. desf.
+    apply Nat.lt_eq_cases in BEFLST. desf.
     2: { exists n. splits; auto. }
     unnw.
     enough (exists n0,
@@ -380,7 +380,7 @@ Section Properties.
            { lia. }
            apply LDMPRCLOS. exists n'. basic_solver. }
          exfalso. apply ZZ; eauto. }
-    apply le_lt_or_eq in AFTLST. desf.
+    apply Nat.lt_eq_cases in AFTLST. desf.
     2: { exfalso. apply ZZ; eauto. }
     destruct (CT n) as [AA]. desc. unnw.
     specialize (BAR LBDOM). specialize (LER LBDOM). specialize (EAR LBDOM).
@@ -424,7 +424,7 @@ Section Properties.
       i <= cti2ri ct n' /\
       internal_step＊ (ct2r ct i) (ct2r ct (cti2ri ct n')).
   Proof.
-    apply le_lt_or_eq in AFTLST. desf.
+    apply Nat.lt_eq_cases in AFTLST. desf.
     2: { exists n. splits; auto. apply rt_refl. }
     exists (1 + n).
     remember (cti2ri ct (1 + n) - i) as p.
@@ -537,13 +537,13 @@ Section CT2T.
     assert (cti2ri ct x < cti2ri ct (S x)) as AA by apply cti2ri_S_mon.
     arewrite (cti2ri ct (S x) =
               cti2ri ct x + (cti2ri ct (S x) - cti2ri ct x)).
-    { apply le_plus_minus. lia. }
+    { lia. }
     rewrite seq_add. rewrite filterP_app, length_app.
     rewrite IHx.
     match goal with
     | |- x + ?Y = _ => enough (Y = 1); [lia|]
     end.
-    rewrite plus_0_l.
+    rewrite Nat.add_0_l.
     rewrite seq_split_gen with (a := cti2ri ct x).
     2: split; lia.
     rewrite Nat.sub_add; [|lia].
@@ -634,14 +634,14 @@ Section CT2T.
     arewrite (cti2ri ct (S x) =
               cti2ri ct x +
               (cti2ri ct (S x) - cti2ri ct x)).
-    { apply le_plus_minus. lia. }
+    { lia. }
     rewrite seq_add. rewrite map_app, filterP_app.
     rewrite IHx.
     2: { etransitivity; [|by apply FF]. basic_solver. }
     match goal with
     | |- _ ++ ?X = _ ++ ?Y => arewrite (X = Y); auto
     end.
-    rewrite !plus_0_l.
+    rewrite !Nat.add_0_l.
     arewrite (S x - x = 1) by lia.
     arewrite (map lab (List.seq x 1) = (lab x) :: nil).
     arewrite (cti2ri ct (S x) - cti2ri ct x = 
