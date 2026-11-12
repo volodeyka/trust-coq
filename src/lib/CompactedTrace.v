@@ -1,10 +1,10 @@
-Require Import Lia IndefiniteDescription.
-Require Import Arith.
+From Stdlib Require Import Lia IndefiniteDescription.
+From Stdlib Require Import Arith.
 From hahn Require Import Hahn.
 Require Import AuxRel.
 Require Import AuxProp.
 
-Require Import PropExtensionality.
+From Stdlib Require Import PropExtensionality.
 
 Set Implicit Arguments.
 

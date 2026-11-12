@@ -1,5 +1,5 @@
 From hahn Require Import Hahn.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Events.
 
 Set Implicit Arguments.

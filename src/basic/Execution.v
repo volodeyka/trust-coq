@@ -5,8 +5,8 @@
 From hahn Require Import Hahn.
 Require Import AuxRel.
 Require Import Labels Events.
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 
 Set Implicit Arguments.
 
@@ -292,14 +292,16 @@ Proof using.
     apply wf_rfl in H0; ins; apply wf_col in H4; ins; congruence.
   }
   splits; ins; eauto; try intro; desf.
-  splits; ins; try intro; desf; eauto using (co_irr WF).
+  pose proof (co_irr WF) as CO_IRR.
+  splits; ins; try intro; desf; eauto using CO_IRR.
   destruct (C x) as [z RF]; ins.
   tertium_non_datur (z = y) as [|NEQ]; desf.
   {
     destruct (ATOM y x) as [X _]; vauto.
     exfalso; eapply co_irr, co_trans; eauto.
   }
-  eapply wf_co_total in NEQ; ins; desf; eauto using (co_trans WF).
+  pose proof (co_trans WF) as CO_TRANS.
+  eapply wf_co_total in NEQ; ins; desf; eauto using CO_TRANS.
   { destruct (ATOM z x) as [X _]; vauto.
     exfalso; eapply co_irr, co_trans, co_trans; eauto.
   }

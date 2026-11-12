@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 Require Import Execution Execution_Aux Events Labels.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Path Util Sem Alg Prev Terminate.
 
 Set Implicit Arguments.

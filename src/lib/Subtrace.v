@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
-Require Import Lia.
-Require Import IndefiniteDescription.
+From Stdlib Require Import Lia.
+From Stdlib Require Import IndefiniteDescription.
 
 
 Section Subtrace.
@@ -17,7 +17,7 @@ Lemma split_exists (tr: trace A) (pos: nat)
 Proof.
   destruct tr; simpl in *.
   { exists (trace_fin (firstn pos l)). exists (trace_fin (skipn pos l)). simpl.
-    splits; f_equal; auto using firstn_skipn, firstn_length_le, skipn_length. }
+    splits; f_equal; auto using firstn_skipn, firstn_length_le, length_skipn. }
   exists (trace_fin (mk_list pos fl)). exists (trace_inf (fun n => fl (pos + n))). 
   simpl. unfold trace_prepend. rewrite length_mk_list. 
   splits; try done. 

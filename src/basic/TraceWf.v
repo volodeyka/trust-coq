@@ -1,10 +1,10 @@
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 From hahn Require Import Hahn.
 Require Import Events.
 Require Import Execution.
 Require Import lib.SetSize.
-Require Import IndefiniteDescription.
+From Stdlib Require Import IndefiniteDescription.
 Require Import lib.ListSum.
 
 Set Implicit Arguments.
@@ -72,7 +72,7 @@ Proof.
                   (fun e : nat => nth_error findom tn = Some (fl e))
                   (List.seq 0 (S (length findom)))))
             (List.seq 0 (length findom)))) (k := 1).
-    2: { rewrite <- EQ, map_length, !seq_length. lia. }
+    2: { rewrite <- EQ, length_map, !length_seq. lia. }
     intros len' H. apply in_map_iff in H as [ind [LEN IND]]. desc.
     remember (filterP (fun e : nat => nth_error findom ind = Some (fl e))
                       (List.seq 0 (S (length findom)))) as poss.
