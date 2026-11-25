@@ -1,7 +1,7 @@
-Require Import List.
+From Stdlib Require Import List.
 Import ListNotations. 
 From hahn Require Import Hahn.
-Require Import Arith.
+From Stdlib Require Import Arith.
 
 Lemma seq_app : forall len1 len2 start,
     List.seq start (len1 + len2) = List.seq start len1 ++ List.seq (start + len1) len2.

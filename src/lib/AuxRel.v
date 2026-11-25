@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 
-Require Import Setoid.
+From Stdlib Require Import Setoid.
 
 Set Implicit Arguments.
 
@@ -535,7 +535,7 @@ Proof.
   induction l.
   { ins.  }
   assert (forall y : A, In y l -> r^? y (fold_right (rel_max r) e l)) as IHl'.
-  { apply IHl. intuition. }
+  { apply IHl. intros x IN. apply PROP. right. exact IN. }
   clear IHl.
   ins. 
   remember (fold_right (rel_max r) e l) as prev.

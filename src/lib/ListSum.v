@@ -1,7 +1,7 @@
-Require Import List.
+From Stdlib Require Import List.
 From hahn Require Import Hahn.
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 
 Definition list_sum l := fold_right plus 0 l.
 

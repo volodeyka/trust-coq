@@ -1,9 +1,9 @@
 (******************************************************************************)
 (** * Definition of execution graph events *)
 (******************************************************************************)
-Require Import Lia.
-Require Import FinFun.
-Require Import List.
+From Stdlib Require Import Lia.
+From Stdlib Require Import FinFun.
+From Stdlib Require Import List.
 From hahn Require Import Hahn.
 Require Import AuxRel.
 Require Import basic.Labels.

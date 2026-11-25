@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 Require Import Execution Execution_Aux Events Labels.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Util.
 
 Set Implicit Arguments.
@@ -352,9 +352,9 @@ Proof using thread_sem.
       intros e1 e2 F; unfolder in F; desf.
       cdes GG'; apply sub_execution_sb in GG'.
       apply NInG; specialize (SUBev _ F1).
-      destruct GG' as [? [? SB]].
-      { unfold sb; unfolder; splits; [|eauto| |]; auto. }
-      unfolder in SB; desf. }
+      assert (SB : sb G e1 e2).
+      { apply GG'. unfold sb; basic_solver. }
+      unfold sb in SB; unfolder in SB; desf. }
     { by rewrite GG'. }
     cdes Sem.
     assert (WF := Wf_G).
@@ -416,7 +416,7 @@ Proof using thread_sem.
       { apply sub_exec_SetRF; eauto; intros ???.
         eapply SBM; basic_solver. }
       intros e' [SB|RF]; ins.
-      { apply sb_SetRF  in SB; unfold sb in SB; ins; unfolder in SB; desf.
+      { unfold sb in SB; ins; unfolder in SB; desf.
         by apply ext_sb_irr in SB0. }
       by unfolder in RF; desf; apply Wf_G. }
     apply sb_max_in_tid in SBM.
@@ -456,7 +456,7 @@ Proof using thread_sem.
   { apply sub_exec_SetCO; eauto.
     intros ???; eapply SBM; basic_solver. }
   intros ? [SB|RF]; ins.
-  { apply sb_SetCO in SB; unfold sb in SB; ins; unfolder in SB; desf.
+  { unfold sb in SB; ins; unfolder in SB; desf.
     by apply ext_sb_irr in SB0.  }
   apply Wf_G in RF; unfolder in RF; desf.
 Qed.

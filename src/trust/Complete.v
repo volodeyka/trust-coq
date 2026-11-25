@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 Require Import Execution Execution_Aux Events Labels.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Util Sem Alg Prev.
 
 Set Implicit Arguments.
@@ -140,7 +140,8 @@ Proof using TS PRf PR LR Gf_p_sem Gf_full Gf_finite Gf_cons Gf_Wf.
   { intros ? HB.
     eapply RV_hb_LR in PR; eauto.
     { specialize (PR a z); destruct PR; desf; [basic_solver|].
-      eapply (cons_hb_irr cons) in HB; ins; eapply Prev_cons; vauto. }
+      eapply (cons_hb_irr cons) in HB; ins; eapply Prev_cons; vauto.
+      eapply Prev_p_sem; eauto. }
     eby eapply In_RV_a. }
   assert (acts G x) as ACTx.
   { eapply total_order_from_list_in1, TruSt_G_corr_ord in T; eauto.
@@ -162,7 +163,7 @@ Proof using TS PRf PR LR Gf_p_sem Gf_full Gf_finite Gf_cons Gf_Wf.
   assert (set_finite (acts G' \₁ is_init)) as [s].
   { eapply Prev_finite; vauto. }
   assert (irreflexive (hb G')). 
-  { eapply (cons_hb_irr cons), Prev_cons; vauto. }
+  { apply (cons_hb_irr cons). exact cons_G'. }
   eapply hb_max_ex with (s := s) in ACT; eauto.
   destruct ACT as [y]; desc.
   assert (LR^? y a) as yLRa by by apply ME in HBMm.
@@ -377,7 +378,7 @@ Proof.
     rewrite <-E; clear E.
     intros. rewrite <-eq_executionE; unfold eq_execution; splits; ins.
     { rewrite DelE; assert (acts G a).
-      { eapply In_RV_a; vauto. }
+      { eapply In_RV_a with (Gf := Gf); eauto. }
       assert (acts G' a).
       { by inv PR; cdes ME; cdes HBM_e. }
       rewrite set_compl_union. unfolder; split; ins; desf; vauto.
@@ -431,7 +432,7 @@ Proof.
   { inv PR; assert (acts G0 a) as ACT by eby eapply In_RV_a.
     ins; by destruct a. }
   assert (Wf__G := Wf_G).
-  assert (cons G) as consG by by eapply Prev_cons; vauto.
+  assert (cons G) as consG by (eapply Prev_cons with (Gf := Gf); vauto).
   inv PR; intros Da.
   apply (wf_rfD Wf_G') in RF; unfolder in RF; desc.
   assert (Da' := Da); unfold Del in Da.

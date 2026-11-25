@@ -1,4 +1,4 @@
-Require Import Lia IndefiniteDescription Arith.
+From Stdlib Require Import Lia IndefiniteDescription Arith.
 From hahn Require Import Hahn.
 Require Import AuxRel.
 Require Import Labels.

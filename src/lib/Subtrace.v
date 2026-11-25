@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
-Require Import Lia.
-Require Import IndefiniteDescription.
+From Stdlib Require Import Lia.
+From Stdlib Require Import IndefiniteDescription.
 
 
 Section Subtrace.
@@ -17,13 +17,13 @@ Lemma split_exists (tr: trace A) (pos: nat)
 Proof.
   destruct tr; simpl in *.
   { exists (trace_fin (firstn pos l)). exists (trace_fin (skipn pos l)). simpl.
-    splits; f_equal; auto using firstn_skipn, firstn_length_le, skipn_length. }
+    splits; f_equal; auto using firstn_skipn, firstn_length_le, length_skipn. }
   exists (trace_fin (mk_list pos fl)). exists (trace_inf (fun n => fl (pos + n))). 
   simpl. unfold trace_prepend. rewrite length_mk_list. 
   splits; try done. 
   f_equal. extensionality x. 
   destruct (PeanoNat.Nat.ltb x pos) eqn:X.
-  2: { apply NPeano.Nat.ltb_ge in X. f_equal. lia. }
+  2: { apply PeanoNat.Nat.ltb_ge in X. f_equal. lia. }
   apply PeanoNat.Nat.ltb_lt in X.
   rewrite nth_mk_list. destruct (Compare_dec.le_lt_dec pos x); by_subst.
 Qed.
@@ -84,7 +84,7 @@ Proof.
   do 2 (destruct (constructive_indefinite_description _ _)). desc.
   rewrite e0. rewrite trace_nth_app, e1.
   destruct (excluded_middle_informative _); [by_subst| ].
-  simpl. rewrite Minus.minus_plus. rewrite trace_nth_app, e2.
+  simpl. replace (start + i - start) with i by lia. rewrite trace_nth_app, e2.
   destruct (excluded_middle_informative _); by_subst.
 Qed. 
   

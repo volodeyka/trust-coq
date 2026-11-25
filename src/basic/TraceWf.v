@@ -1,10 +1,10 @@
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 From hahn Require Import Hahn.
 Require Import Events.
 Require Import Execution.
 Require Import lib.SetSize.
-Require Import IndefiniteDescription.
+From Stdlib Require Import IndefiniteDescription.
 Require Import lib.ListSum.
 
 Set Implicit Arguments.
@@ -72,14 +72,14 @@ Proof.
                   (fun e : nat => nth_error findom tn = Some (fl e))
                   (List.seq 0 (S (length findom)))))
             (List.seq 0 (length findom)))) (k := 1).
-    2: { rewrite <- EQ, map_length, !seq_length. lia. }
+    2: { rewrite <- EQ, length_map, !length_seq. lia. }
     intros len' H. apply in_map_iff in H as [ind [LEN IND]]. desc.
     remember (filterP (fun e : nat => nth_error findom ind = Some (fl e))
                       (List.seq 0 (S (length findom)))) as poss.
     rewrite <- LEN. do 2 (destruct poss; [vauto| ]).
     assert (In n (n :: n0 :: poss)) as IN1 by done. assert (In n0 (n :: n0 :: poss)) as IN2 by vauto.
     rewrite Heqposs in IN1, IN2. apply in_filterP_iff in IN1. apply in_filterP_iff in IN2. desc.
-    pose proof (NPeano.Nat.lt_trichotomy n n0). des. 
+    pose proof (Nat.lt_trichotomy n n0). des.
     2: { subst n0.
          assert (NoDup (n :: n :: poss)).
          { rewrite Heqposs. apply nodup_filterP, seq_NoDup. }
@@ -104,7 +104,7 @@ Proof.
   assert (NOmega.lt_nat_l i (set_size (acts G \₁ is_init))) as LTi.
   { liaW (set_size (acts G \₁ is_init)). }
 
-  pose proof (NPeano.Nat.lt_trichotomy (index (nu i)) (index (nu j))). des; auto.
+  pose proof (Nat.lt_trichotomy (index (nu i)) (index (nu j))). des; auto.
   { exfalso. specialize INJ with (i := i) (j := j). specialize_full INJ; auto; [| lia].
     eapply wf_index; eauto.
     apply INSET in LTj. apply INSET in LTi. red in LTj, LTi. desc. 

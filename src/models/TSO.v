@@ -1,11 +1,11 @@
 Require Import Labels.
 Require Import Events.
 Require Import Execution.
-Require Import List.
+From Stdlib Require Import List.
 From hahn Require Import Hahn. 
 Require Import TraceWf.
-Require Import IndefiniteDescription.
-Require Import Lia.
+From Stdlib Require Import IndefiniteDescription.
+From Stdlib Require Import Lia.
 
 Section TSO. 
 

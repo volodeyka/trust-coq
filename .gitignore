@@ -29,3 +29,4 @@ dependency_graph.png
 *.blg
 *.*.gz
 *.tex.bak
+_CoqProject

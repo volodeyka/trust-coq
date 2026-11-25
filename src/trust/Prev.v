@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 Require Import Execution Execution_Aux Events Labels.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Util Sem Path TerminateGen.
 
 Set Implicit Arguments.
@@ -70,7 +70,14 @@ Qed.
 Lemma Completion_cons : forall G G', 
   Completion G G' -> cons G -> cons G'.
 Proof using.
-  by intros ?? []; [apply cons_max_ext_r|apply cons_max_ext_w].
+  intros G G' C CONS.
+  assert (SBM : forall a, next G a -> sb_max (acts G) a).
+  { intros a NEXT.
+    unfold sb_max; split; [|basic_solver].
+    intros x y SB; unfolder in SB; desf.
+    eapply avail_sb_max; eauto using next_avail. }
+  destruct C;
+    [eapply cons_max_ext_r | eapply cons_max_ext_w]; eauto.
 Qed.
 
 Definition full G := avail G ≡₁ ∅.
@@ -787,8 +794,11 @@ Proof using PR Gf_p_sem Gf_full Gf_cons Gf_Wf.
   { unfold full in Gf_full; rewrite Gf_full; basic_solver. }
   destruct rv as [a|].
   { intros e1 e2 [ME AV].
-    destruct (next_G PR2) as [_ []]; [| |eapply LR_trans; eauto]; desf.
-    all: eapply me_LR_e_RV; basic_solver. }
+    destruct (next_G PR2) as [_ NEXT].
+    destruct (NEXT e2 AV) as [EQ|LT].
+    { subst e2. eapply me_LR_e_RV; basic_solver. }
+    eapply LR_trans; [|exact LT].
+    eapply me_LR_e_RV; basic_solver. }
   assert (meLRe := PR2).
   eapply me_LR_e_NR in meLRe; vauto.
   erewrite avail_G_NR; eauto.
@@ -1281,7 +1291,7 @@ Proof.
   apply Prev_path in PRf; desf.
   set (P := (fun x => acts x e)).
   assert (PT := PRf).
-  apply path_cont with (P0 := P) in PRf; try basic_solver.
+  apply path_cont with (P := P) in PRf; try basic_solver.
   { desf.
     apply RV_RV in PR; apply PR.
     unfold Prev_rel in P12; desf.
@@ -1335,7 +1345,7 @@ Proof.
   set (P := fun '(G,RW) => acts G e /\ In e RW).
   assert (Pf := proj1 Prev_RW_path PRf); desf.
   assert (PATH := Pf).
-  apply path_cont with (P0 := P) in Pf; desf; eauto; [|firstorder|].
+  apply path_cont with (P := P) in Pf; desf; eauto; [|firstorder|].
   { destruct x1 as [G0 RW2].
     destruct x2 as [G2 RW1]; ins.
     clarify_not.
@@ -1496,7 +1506,7 @@ Proof.
   apply Prev_RW_rel_Prev_RW in PR.
   assert (NoDup RW) by by apply NoDup_RW in PR.
   apply RW_in_Gf in PR; ins; desf.
-  apply Plus.plus_lt_compat; try lia.
+  apply PeanoNat.Nat.add_lt_mono; try lia.
   enough (length RW < K).
   { apply PeanoNat.Nat.mul_lt_mono; lia. }
   assert (FIN := p_sem_finite Gf_p_sem); desf.

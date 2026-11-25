@@ -1,5 +1,5 @@
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 From hahn Require Import Hahn.
 Require Import AuxRel.
 Require Import Labels.

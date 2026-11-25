@@ -1,6 +1,6 @@
 From hahn Require Import Hahn.
 Require Import Execution Execution_Aux Events Labels.
-From Coq Require Import Lia.
+From Stdlib Require Import Lia.
 Require Import Util Sem Alg.
 
 Set Implicit Arguments.
@@ -112,7 +112,7 @@ Proof using .
   destruct InNR0; unfold Revisitable; in_simp; split; [basic_solver|].
   unfolder; intros F; desf; apply (F w a).
   inv TS; splits; ins; eauto; unfolder; eauto.
-  destruct (excluded_middle_informative _); [| tauto].
+  des_if; [|tauto].
   apply total_order_from_list_cons; left; splits; eauto.
   in_simp; splits; [|left]; splits; eauto.
   { eapply TruSt_G_corr_ord; eauto; split; eauto.
@@ -371,7 +371,7 @@ Proof using p_sem_finite.
     apply l_RW_K in TSk'; basic_solver. }
   apply l_RW_K in TS; desf; simpls.
   assert (length rw * (K + 1) < (K + 1) * (K + 1)); try lia.
-  apply Mult.mult_lt_compat_r; lia.
+  apply PeanoNat.Nat.mul_lt_mono_pos_r; lia.
 Qed.
 
 Lemma TruSt0 k (TS : TruSt_rel^^k st0 st0) : k = 0.

@@ -1,7 +1,7 @@
-Require Import Lia.
-Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import Arith.
 From hahn Require Import Hahn.
-Require Import PropExtensionality.
+From Stdlib Require Import PropExtensionality.
 
 Set Implicit Arguments.
 
@@ -55,18 +55,18 @@ Lemma le_max_of_list_l n l :
   max_of_list l <= n <-> (forall m, In m l -> m <= n).
 Proof using.
   induction l; ins.
-  intuition; desf; try lia.
+  intuition auto; desf; try lia.
   rewrite Nat.max_lub_iff, IHl; clear.
-  intuition; desf; eauto.
+  intuition auto; desf; eauto.
 Qed.
 
 Lemma lt_max_of_list_l n l :
   max_of_list l < n <-> (n <> 0 /\ forall m, In m l -> m < n).
 Proof using.
   induction l; ins.
-  intuition; desf; try lia.
+  intuition auto; desf; try lia.
   rewrite Nat.max_lub_lt_iff, IHl; clear.
-  intuition; desf; eauto.
+  intuition auto; desf; eauto.
 Qed.
 
 Lemma max_of_list_eq_zero l :
@@ -161,9 +161,9 @@ Lemma set_finite_nat_precise_bounded s n
     ⟪ INS : s bound ⟫ /\
     ⟪ BND : forall m (SM : s m), m <= bound ⟫.
 Proof using.
-  eapply set_finite_r_min_precise_bounded with (r:=gt) (n0:=n) in SF; auto.
-  3: { red. apply gt_irrefl. }
-  2: { red. apply gt_trans. }
+  eapply set_finite_r_min_precise_bounded with (r:=gt) (n:=n) in SF; auto.
+  3: { unfold irreflexive, gt; lia. }
+  2: { unfold transitive, gt; lia. }
   desf. exists bound. splits; auto.
   ins. apply BND in SM.
   destruct (le_lt_dec m bound); auto.
@@ -184,7 +184,7 @@ Proof using.
   exists m. splits; auto.
   etransitivity.
   { apply filterP_length. }
-  rewrite seq_length. lia.
+  rewrite length_seq. lia.
 Qed.
 
 Lemma set_nat_exists_min (s : nat -> Prop) n (IN : s n) :
@@ -251,7 +251,7 @@ Proof using.
   desc; ins.
   exists (y :: l). splits; auto.
   desf. clear.
-  rewrite nnil_last_default_irrelevance with (y0:=x); ins.
+  rewrite nnil_last_default_irrelevance with (y:=x); ins.
 Qed.
 
 Definition pair_list_elem_related {A} (R : relation A) (p : A * list A) :=
@@ -296,7 +296,7 @@ Proof using.
     rewrite nth_indep with (n:=i) (d':=f al); [|lia].
     rewrite nth_indep with (n:=j) (d':=f al); auto.
     rewrite !map_nth.
-    rewrite map_length in LTj.
+    rewrite length_map in LTj.
     apply INJ.
     { by apply NODUP. }
     all: apply nth_In; lia. }

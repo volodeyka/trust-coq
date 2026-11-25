@@ -2,8 +2,8 @@
 (** * Definition of labels *)
 (******************************************************************************)
 
-Require Import FinFun ListDec.
-Require Import List.
+From Stdlib Require Import FinFun ListDec.
+From Stdlib Require Import List.
 From hahn Require Import Hahn.
 Require Import AuxRel.
 
