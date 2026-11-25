@@ -1046,11 +1046,13 @@ Record consType := {
     forall G G', (G ⊆ G')%Ex -> cons_of G' -> cons_of G;
   cons_max_ext_r     :
     forall G w a,
+    sb_max (acts G) a ->
     is_r a ->
     MaximalWrite G a w -> 
     cons_of G -> cons_of (SetRF (Add G a) a w);
   cons_max_ext_w     :
     forall G w a,
+    sb_max (acts G) a ->
     is_w a -> same_loc w a ->
     MaximalWrite G (InitEvent (loc a)) w -> 
     cons_of G -> cons_of (SetCO (Add G a) w a);

@@ -70,7 +70,14 @@ Qed.
 Lemma Completion_cons : forall G G', 
   Completion G G' -> cons G -> cons G'.
 Proof using.
-  by intros ?? []; [apply cons_max_ext_r|apply cons_max_ext_w].
+  intros G G' C CONS.
+  assert (SBM : forall a, next G a -> sb_max (acts G) a).
+  { intros a NEXT.
+    unfold sb_max; split; [|basic_solver].
+    intros x y SB; unfolder in SB; desf.
+    eapply avail_sb_max; eauto using next_avail. }
+  destruct C;
+    [eapply cons_max_ext_r | eapply cons_max_ext_w]; eauto.
 Qed.
 
 Definition full G := avail G ≡₁ ∅.
